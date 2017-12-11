@@ -89,7 +89,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <Button
-                    android:id="@+id/button_inicio_sesion"
+                    android:id="@+id/button_dialog_registro"
                     android:background="@drawable/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
