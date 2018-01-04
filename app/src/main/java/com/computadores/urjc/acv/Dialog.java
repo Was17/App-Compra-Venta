@@ -36,5 +36,6 @@ public class Dialog extends DialogFragment {
                     }
                 });
         return builder.create();
+
     }
 }
