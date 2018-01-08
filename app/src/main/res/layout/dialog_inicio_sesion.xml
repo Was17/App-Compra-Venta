@@ -46,12 +46,16 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Correo"
+                        android:hint="Nombre De Usuario"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="30dp" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
