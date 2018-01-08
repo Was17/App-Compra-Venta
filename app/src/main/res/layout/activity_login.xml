@@ -62,4 +62,22 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintVertical_bias="0.32" />
+
+    <RadioButton
+        android:id="@+id/boton_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorURJC"
+        android:button="@android:drawable/ic_menu_help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_registro"
+        app:layout_constraintVertical_bias="1.0"
+        />
 </android.support.constraint.ConstraintLayout>
