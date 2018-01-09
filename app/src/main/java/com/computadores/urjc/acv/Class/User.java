@@ -1,22 +1,25 @@
-package com.computadores.urjc.acv;
+package com.computadores.urjc.acv.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by was12 on 14/11/2017.
  */
 
-public class obj1 {
+public class User implements Serializable{
     private int id;
     private String nombre;
     private String email;
     private String password;
-    private ArrayList<obj2> lista_deseos;
-    private ArrayList<obj2> lista_articulos_venta;
-    private ArrayList<obj2> lista_vendidos;
-    private ArrayList<obj2> lista_compra;
+    private int Foto;
+    private ArrayList<Articulo> lista_deseos;
+    private ArrayList<Articulo> lista_articulos_venta;
+    private ArrayList<Articulo> lista_vendidos;
+    private ArrayList<Articulo> lista_compra;
+    private ArrayList<Chat> chats;
 
-    public obj1(int id, String nombre, String email, String password, ArrayList<obj2> lista_deseos, ArrayList<obj2> lista_articulos_venta, ArrayList<obj2> lista_vendidos, ArrayList<obj2> lista_compra) {
+    public User(int id, String nombre, String email, String password, ArrayList<Articulo> lista_deseos, ArrayList<Articulo> lista_articulos_venta, ArrayList<Articulo> lista_vendidos, ArrayList<Articulo> lista_compra) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
@@ -27,7 +30,10 @@ public class obj1 {
         this.lista_compra = lista_compra;
     }
 
-    public obj1() {
+    public User() {
+    }
+public User(String name) {
+        this.nombre=name;
     }
 
     public int getId() {
@@ -62,35 +68,35 @@ public class obj1 {
         this.password = password;
     }
 
-    public ArrayList<obj2> getLista_deseos() {
+    public ArrayList<Articulo> getLista_deseos() {
         return lista_deseos;
     }
 
-    public void setLista_deseos(ArrayList<obj2> lista_deseos) {
+    public void setLista_deseos(ArrayList<Articulo> lista_deseos) {
         this.lista_deseos = lista_deseos;
     }
 
-    public ArrayList<obj2> getLista_articulos_venta() {
+    public ArrayList<Articulo> getLista_articulos_venta() {
         return lista_articulos_venta;
     }
 
-    public void setLista_articulos_venta(ArrayList<obj2> lista_articulos_venta) {
+    public void setLista_articulos_venta(ArrayList<Articulo> lista_articulos_venta) {
         this.lista_articulos_venta = lista_articulos_venta;
     }
 
-    public ArrayList<obj2> getLista_vendidos() {
+    public ArrayList<Articulo> getLista_vendidos() {
         return lista_vendidos;
     }
 
-    public void setLista_vendidos(ArrayList<obj2> lista_vendidos) {
+    public void setLista_vendidos(ArrayList<Articulo> lista_vendidos) {
         this.lista_vendidos = lista_vendidos;
     }
 
-    public ArrayList<obj2> getLista_compra() {
+    public ArrayList<Articulo> getLista_compra() {
         return lista_compra;
     }
 
-    public void setLista_compra(ArrayList<obj2> lista_compra) {
+    public void setLista_compra(ArrayList<Articulo> lista_compra) {
         this.lista_compra = lista_compra;
     }
 }

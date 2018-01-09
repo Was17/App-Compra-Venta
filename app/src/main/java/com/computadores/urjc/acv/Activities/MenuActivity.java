@@ -1,0 +1,138 @@
+package com.computadores.urjc.acv.Activities;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+
+import com.computadores.urjc.acv.Class.Articulo;
+import com.computadores.urjc.acv.Fragments.UserFragment;
+import com.computadores.urjc.acv.Fragments.VentaFragment;
+import com.computadores.urjc.acv.R;
+import com.computadores.urjc.acv.Utils.SessionManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MenuActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 1;
+    private VentaFragment ventaFragment;
+    private SessionManager sessionManager;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_menu);
+        sessionManager=new SessionManager(this);
+        // Adding Toolbar to Main screen
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Setting ViewPager for each Tabs
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        setupViewPager(viewPager);
+        // Set Tabs inside Toolbar
+        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+        snack();
+        /**TabLayout.Tab tabCall = tabs.getTabAt(1);
+        tabCall.setIcon(R.drawable.home_selector);*/
+    }
+    private  Adapter adapter;
+    // Add Fragments to Tabs
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new Adapter(getSupportFragmentManager());
+        ventaFragment=new VentaFragment();
+        adapter.addFragment(ventaFragment,"Venta");
+        adapter.addFragment(new UserFragment(),"Usuarios");
+        adapter.addFragment(new VentaFragment(),"Venta");
+        viewPager.setAdapter(adapter);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Articulo passedItem = (Articulo) data.getExtras().get("passed_item");
+            byte[] byteArray = data.getByteArrayExtra("image");
+            Bitmap image = BitmapFactory.decodeByteArray(byteArray, 0,
+                    byteArray.length);
+            passedItem.setImagen(image);
+            // deal with the item yourself
+
+        }
+    }
+    private void snack(){
+
+        Snackbar snackbar =Snackbar.make(findViewById(R.id.placeSnackBar),"Bienvenido "+ sessionManager.getUserDetails().get("name"),Snackbar.LENGTH_LONG);
+        View view = snackbar.getView();
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)      view.getLayoutParams();
+        params.gravity = Gravity.FILL_HORIZONTAL | Gravity.BOTTOM;
+        view.setLayoutParams(params);
+
+        snackbar.show();
+    }
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public Adapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if(id== R.id.logout){
+            sessionManager.logoutUser();
+        }
+        //noinspection SimplifiableIfStatement
+
+        return super.onOptionsItemSelected(item);
+    }
+}
