@@ -131,6 +131,10 @@ public class MenuActivity extends AppCompatActivity {
         if(id== R.id.logout){
             sessionManager.logoutUser();
         }
+        if(id== R.id.add){
+            Intent intent=new Intent(this,AddArticuloActivity.class);
+            startActivityForResult(intent,REQUEST_CODE);
+        }
         //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
