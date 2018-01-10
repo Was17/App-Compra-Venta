@@ -146,7 +146,7 @@ public class AddArticuloActivity extends AppCompatActivity {
     private void showOptions() {
         final CharSequence[] option = {"Tomar foto", "Elegir de galeria", "Cancelar"};
         final AlertDialog.Builder builder = new AlertDialog.Builder(AddArticuloActivity.this);
-        builder.setTitle("Eleige una opción");
+        builder.setTitle("Elige una opción");
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
