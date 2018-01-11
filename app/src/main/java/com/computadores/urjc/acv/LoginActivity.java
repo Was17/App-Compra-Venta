@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.computadores.urjc.acv.Activities.MenuActivity;
 import com.computadores.urjc.acv.Database.UserDatabase;
 import com.computadores.urjc.acv.Utils.SessionManager;
+
+import static java.lang.Thread.sleep;
 
 public class LoginActivity extends AppCompatActivity {
     private  Context context;
@@ -59,11 +62,16 @@ public class LoginActivity extends AppCompatActivity {
                             userDatabase.open();
                             if(!username.equals("name")){
                                 Cursor c=userDatabase.getUser(username);
-                                if(username.equals(c.getString(1)) && password.equals(c.getString(3))){
+                               if(c==null) {
+                                   Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
+                                   userDatabase.close();
+                               }
+                                else if(username.equals(c.getString(1)) && password.equals(c.getString(3))){
 
                                     // Creating user login session
                                     // For testing i am stroing name, email as follow
                                     // Use user real data
+
                                     session.createLoginSession(username, c.getString(2));
                                     userDatabase.close();
                                     // Staring MainActivity
@@ -71,18 +79,25 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(i);
                                     finish();
                                 }
+                                else{
+                                    Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
+                                    userDatabase.close();
+                                }
 
 
                             }else{
                                 // username / password doesn't match
+                                Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
 
                                 userDatabase.close();
                             }
                         }else{
+                            Toast.makeText(getApplicationContext(),"Usuario o contraseña sin completar",Toast.LENGTH_LONG).show();
+
                             // user didn't entered username or password
                             // Show alert asking him to enter the details
 
-                            userDatabase.close();
+
                         }
 
                     }
@@ -112,15 +127,25 @@ public class LoginActivity extends AppCompatActivity {
                 buttn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        userDatabase.open();
-                        userDatabase.insert(user_name.getText().toString(),email.getText().toString(),password.getText().toString(),"sdg");
-                        userDatabase.close();
-                        session.createLoginSession("test", "test");
+                        if(email.toString().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Correo incorrecto", Toast.LENGTH_LONG).show();
+                        }else if (user_name.toString().trim().length()==0){
+                            Toast.makeText(getApplicationContext(),"Usuario sin rellenar",Toast.LENGTH_LONG).show();
 
-                        // Staring MainActivity
-                        Intent i = new Intent(getApplicationContext(), MenuActivity.class);
-                        startActivity(i);
-                        finish();
+                        }else if (password.toString().trim().length()==0){
+                            Toast.makeText(getApplicationContext()," Contraseña sin rellenar",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            userDatabase.open();
+                            userDatabase.insert(user_name.getText().toString(), email.getText().toString(), password.getText().toString(), "sdg");
+                            userDatabase.close();
+                            session.createLoginSession("test", "test");
+
+                            // Staring MainActivity
+                            Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
                     }
                 });
                 AlertDialog dialog=builder.create();

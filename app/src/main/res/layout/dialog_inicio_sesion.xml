@@ -45,7 +45,7 @@
                     android:id="@+id/email_sesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Correo"
+                    android:hint="Nombre De Usuario"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />

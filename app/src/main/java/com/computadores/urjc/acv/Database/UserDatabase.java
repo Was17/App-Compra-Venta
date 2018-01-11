@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 /**
  * Created by was12 on 22/12/2017.
@@ -75,17 +76,24 @@ onCreate(db);
     public Cursor getAll(){
         return sqLiteDatabase.query(TABLE_NAME,new String[]{ID,NAME, EMAIL,PASSWORD,PHOTO},null,null,null,null,null);
     }
-    public Cursor getUser(String name)throws SQLException{
-        Cursor cursor;
+    public Cursor getUser(String name)throws SQLException {
+        Cursor cursor = null;
 
-        cursor = this.sqLiteDatabase.query(true,TABLE_NAME,new String[]{ID,NAME,EMAIL,PASSWORD,PHOTO}, NAME+ "=?", new String[] { name }, null, null, null,null );
-        if(cursor!=null){
-            cursor.moveToFirst();
-        }
-        return cursor;}
+
+
+                cursor = this.sqLiteDatabase.query(true, TABLE_NAME, new String[]{ID, NAME, EMAIL, PASSWORD, PHOTO}, NAME + "=?", new String[]{name}, null, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                }
+                return cursor;
+
+
+
+
+    }
 public Cursor get(long rowID)throws SQLException{
-
-        Cursor cursor=sqLiteDatabase.query(true,TABLE_NAME,new String[]{ID,NAME,EMAIL,PASSWORD,PHOTO},ID+"="+rowID,null,null,null,null,null);
+    Cursor cursor=null;
+         cursor=sqLiteDatabase.query(true,TABLE_NAME,new String[]{ID,NAME,EMAIL,PASSWORD,PHOTO},ID+"="+rowID,null,null,null,null,null);
         if(cursor!=null){
             cursor.moveToFirst();
         }
