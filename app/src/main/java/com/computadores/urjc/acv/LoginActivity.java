@@ -115,29 +115,32 @@ public class LoginActivity extends AppCompatActivity {
                 View view=getLayoutInflater().inflate(R.layout.dialog_registro,null);
                 builder.setView(view);
 
-                final EditText email=view.findViewById(R.id.email_registro);
+                final EditText Email=view.findViewById(R.id.email_registro);
                 final EditText user_name=view.findViewById(R.id.user_name_registro);
-                final EditText password=view.findViewById(R.id.password_registro);
+                final EditText Password=view.findViewById(R.id.password_registro);
                 Button buttn=(Button) view.findViewById(R.id.button_dialog_registro);
                 buttn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(email.toString().trim().length() > 0) {
-                            Toast.makeText(getApplicationContext(), "Correo incorrecto", Toast.LENGTH_LONG).show();
-                        }else if (user_name.toString().trim().length() > 0){
-                            Toast.makeText(getApplicationContext(),"Usuario sin rellenar",Toast.LENGTH_LONG).show();
+                        // Get username, password from EditText
+                        String username = user_name.getText().toString();
+                        String password = Password.getText().toString();
+                        String email=       Email.getText().toString();
 
-                        }else if (password.toString().trim().length() > 0){
+                        // Check if username, password is filled
+
+                        if(email.trim().length() <= 0) {
+                            Toast.makeText(getApplicationContext(), "Correo incorrecto", Toast.LENGTH_LONG).show();
+                        }else if (username.trim().length() <= 0){
+                            Toast.makeText(getApplicationContext(),"Usuario sin rellenar",Toast.LENGTH_LONG).show();
+                        }else if (password.trim().length() <= 0){
                             Toast.makeText(getApplicationContext()," Contraseña sin rellenar",Toast.LENGTH_LONG).show();
                         }
                         else {
-                            String username,email_aux;
-                            username=user_name.getText().toString();
-                            email_aux=email.getText().toString();
                             database.open();
-                            database.insertUser(username,email_aux, password.getText().toString(), "sdg");
+                            database.insertUser(username,email, password, "sdg");
                             database.close();
-                            session.createLoginSession(username, email_aux);
+                            session.createLoginSession(username, email);
 
                             // Staring MainActivity
                             Intent i = new Intent(getApplicationContext(), MenuActivity.class);
