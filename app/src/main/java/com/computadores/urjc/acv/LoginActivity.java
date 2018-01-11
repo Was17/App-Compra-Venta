@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.computadores.urjc.acv.Activities.MenuActivity;
@@ -44,6 +48,10 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.show();
                 final EditText email=view.findViewById(R.id.email_sesion);
                 final EditText editPassword= (EditText) view.findViewById(R.id.password_sesion);
+                //PARA VISUALIZAR CONTRASEÑA
+                // editPassword.setTransformationMethod(null);
+                // PARA BLOQUEAR VISUALIZACION
+                //editPassword.setTransformationMethod(new PasswordTransformationMethod());
                 Button buttonSesion=(Button) view.findViewById(R.id.button_dialog_inicio_sesion);
                 buttonSesion.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -130,11 +138,11 @@ public class LoginActivity extends AppCompatActivity {
                         // Check if username, password is filled
 
                         if(email.trim().length() <= 0) {
-                            Toast.makeText(getApplicationContext(), "Correo incorrecto", Toast.LENGTH_LONG).show();
+                            Email.setError("Email no valido");
                         }else if (username.trim().length() <= 0){
-                            Toast.makeText(getApplicationContext(),"Usuario sin rellenar",Toast.LENGTH_LONG).show();
+                            user_name.setError("Usuario no valido");
                         }else if (password.trim().length() <= 0){
-                            Toast.makeText(getApplicationContext()," Contraseña sin rellenar",Toast.LENGTH_LONG).show();
+                           Password.setError("Contraseña no valida");
                         }
                         else {
                             database.open();
