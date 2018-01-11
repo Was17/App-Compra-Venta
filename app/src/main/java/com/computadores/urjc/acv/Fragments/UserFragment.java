@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +17,7 @@ import android.widget.TextView;
 
 
 import com.computadores.urjc.acv.Class.User;
-import com.computadores.urjc.acv.Database.ArticuloDatabase;
-import com.computadores.urjc.acv.Database.UserDatabase;
+import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.R;
 
 import java.util.ArrayList;
@@ -37,7 +35,6 @@ import javax.mail.internet.MimeMessage;
  * A simple {@link Fragment} subclass.
  */
 public class UserFragment extends Fragment {
-    ArticuloDatabase articuloDatabase;
 
 
     public UserFragment() {
@@ -78,19 +75,18 @@ public class UserFragment extends Fragment {
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
         // Set numbers of List in RecyclerView.
         ArrayList<User> objetos;
-        UserDatabase userDatabase;
+        Database database;
         public ContentAdapter(Context context) {
-            userDatabase=new UserDatabase(context);
-            userDatabase.open();
-            Cursor c=userDatabase.getAll();
-            c.moveToFirst();
+            database =new Database(context);
+            database.open();
+            Cursor c= database.getAllUsers();
             this.objetos = new ArrayList<User>();
             while (c.moveToNext()){
                 objetos.add(new User(c.getString(1)));
             }
             objetos.add(new User("jonads"));
             objetos.add(new User("Eustaquio"));
-            userDatabase.close();
+            database.close();
         }
 
         @Override

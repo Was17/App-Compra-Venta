@@ -1,7 +1,6 @@
 package com.computadores.urjc.acv;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.computadores.urjc.acv.Database.UserDatabase;
 import com.computadores.urjc.acv.Utils.PrefManager;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
@@ -33,19 +31,10 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
     private SessionManager sessionManager;
-    private UserDatabase userDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userDatabase=new UserDatabase(getApplication());
-        userDatabase.open();
-        userDatabase.insert("jesus","was12","was","was");
-        userDatabase.insert("jesu","jesu","was","jes");
-        userDatabase.insert("jes","jes","jes","jes");
-        userDatabase.insert("je","wa","was","jes");
-        userDatabase.insert("j","was1","was","was");
-        userDatabase.insert("was","was","was","was");
-        userDatabase.close();
         sessionManager=new SessionManager(this);
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);

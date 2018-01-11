@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 
 import com.computadores.urjc.acv.Class.Articulo;
-import com.computadores.urjc.acv.Database.ArticuloDatabase;
 import com.computadores.urjc.acv.R;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class VentaFragment extends Fragment {
-ArticuloDatabase articuloDatabase;
 
 
     public VentaFragment() {
@@ -68,9 +66,8 @@ ArticuloDatabase articuloDatabase;
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
         // Set numbers of List in RecyclerView.
         ArrayList<Articulo> objetos;
-        ArticuloDatabase articuloDatabase;
+
         public ContentAdapter(Context context) {
-            articuloDatabase=new ArticuloDatabase(context);
             this.objetos = new ArrayList<Articulo>();
 
         }

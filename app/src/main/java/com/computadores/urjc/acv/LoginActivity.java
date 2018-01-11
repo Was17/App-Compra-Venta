@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.computadores.urjc.acv.Activities.MenuActivity;
-import com.computadores.urjc.acv.Database.UserDatabase;
+import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
 import static java.lang.Thread.sleep;
@@ -20,7 +20,7 @@ import static java.lang.Thread.sleep;
 public class LoginActivity extends AppCompatActivity {
     private  Context context;
 
-    UserDatabase userDatabase;
+    Database database;
     // Session Manager Class
     SessionManager session;
     @Override
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = getApplication();
-        userDatabase=new UserDatabase(getApplication());
+        database =new Database(getApplication());
 
         session=new SessionManager(context);
 
@@ -59,37 +59,32 @@ public class LoginActivity extends AppCompatActivity {
                             // For testing puspose username, password is checked with sample data
                             // username = test
                             // password = test
-                            userDatabase.open();
                             if(!username.equals("name")){
-                                Cursor c=userDatabase.getUser(username);
-                               if(c==null) {
-                                   Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
-                                   userDatabase.close();
-                               }
-                                else if(username.equals(c.getString(1)) && password.equals(c.getString(3))){
+                                Cursor c;
+                                try {
+                                    database.open();
+                                     c = database.getUserByName(username);
+                                    if(username.equals(c.getString(1)) && password.equals(c.getString(3))){
 
-                                    // Creating user login session
-                                    // For testing i am stroing name, email as follow
-                                    // Use user real data
+                                        // Creating user login session
+                                        // For testing i am stroing name, email as follow
+                                        // Use user real data
 
-                                    session.createLoginSession(username, c.getString(2));
-                                    userDatabase.close();
-                                    // Staring MainActivity
-                                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                                else{
+                                        session.createLoginSession(username, c.getString(2));
+                                        database.close();
+                                        // Staring MainActivity
+                                        Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                }catch(Exception e){
+
                                     Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
-                                    userDatabase.close();
+                                    database.close();
                                 }
-
-
                             }else{
                                 // username / password doesn't match
                                 Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
-
-                                userDatabase.close();
                             }
                         }else{
                             Toast.makeText(getApplicationContext(),"Usuario o contraseña sin completar",Toast.LENGTH_LONG).show();
@@ -127,19 +122,22 @@ public class LoginActivity extends AppCompatActivity {
                 buttn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(email.toString().isEmpty()) {
+                        if(email.toString().trim().length() > 0) {
                             Toast.makeText(getApplicationContext(), "Correo incorrecto", Toast.LENGTH_LONG).show();
-                        }else if (user_name.toString().trim().length()==0){
+                        }else if (user_name.toString().trim().length() > 0){
                             Toast.makeText(getApplicationContext(),"Usuario sin rellenar",Toast.LENGTH_LONG).show();
 
-                        }else if (password.toString().trim().length()==0){
+                        }else if (password.toString().trim().length() > 0){
                             Toast.makeText(getApplicationContext()," Contraseña sin rellenar",Toast.LENGTH_LONG).show();
                         }
                         else {
-                            userDatabase.open();
-                            userDatabase.insert(user_name.getText().toString(), email.getText().toString(), password.getText().toString(), "sdg");
-                            userDatabase.close();
-                            session.createLoginSession("test", "test");
+                            String username,email_aux;
+                            username=user_name.getText().toString();
+                            email_aux=email.getText().toString();
+                            database.open();
+                            database.insertUser(username,email_aux, password.getText().toString(), "sdg");
+                            database.close();
+                            session.createLoginSession(username, email_aux);
 
                             // Staring MainActivity
                             Intent i = new Intent(getApplicationContext(), MenuActivity.class);
