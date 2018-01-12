@@ -39,10 +39,12 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.ArticuloActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.UserActivity"
+        <activity android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait"  />
         <activity android:name=".Activities.ChatActivity"
             android:screenOrientation="portrait" ></activity>
+        <activity android:name=".Activities.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

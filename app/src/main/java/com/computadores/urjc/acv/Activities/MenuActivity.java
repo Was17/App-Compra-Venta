@@ -135,6 +135,10 @@ public class MenuActivity extends AppCompatActivity {
             Intent intent=new Intent(this,AddArticuloActivity.class);
             startActivityForResult(intent,REQUEST_CODE);
         }
+        if( id==R.id.perfil){
+            Intent intent1= new Intent(this,ProfileActivity.class);
+            startActivityForResult(intent1,REQUEST_CODE);
+        }
         //noinspection SimplifiableIfStatement
 
         return super.onOptionsItemSelected(item);
