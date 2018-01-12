@@ -141,6 +141,7 @@ public class MenuActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id== R.id.logout){
             sessionManager.logoutUser();
+            finish();
         }
         if(id== R.id.add){
             Intent intent=new Intent(this,AddArticuloActivity.class);
