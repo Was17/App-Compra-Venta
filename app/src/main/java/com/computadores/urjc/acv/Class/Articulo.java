@@ -27,9 +27,8 @@ public class Articulo implements Serializable {
         this.usuariosInteresados = usuariosInteresados;
     }
 
-    public Articulo(String hola, Bitmap ic_dashboard_black_24dp) {
+    public Articulo(String hola) {
         this.nombre=hola;
-        this.imagen=ic_dashboard_black_24dp;
     }
 
     public String getNombre() {

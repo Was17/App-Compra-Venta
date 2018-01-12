@@ -10,14 +10,14 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/perfil"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_person_24dp"
         android:orderInCategory="100"
         android:title="@string/profile"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/logout"
-        android:icon="@android:drawable/ic_lock_power_off"
+        android:icon="@drawable/ic_power_settings_new_24dp"
         android:orderInCategory="100"
         android:title="@string/logout"
         app:showAsAction="always" />

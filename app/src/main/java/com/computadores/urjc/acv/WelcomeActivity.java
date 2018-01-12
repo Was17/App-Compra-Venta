@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Utils.PrefManager;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
@@ -35,6 +36,21 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Database database=new Database(getApplicationContext());
+        database.open();
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertArticulo("fg","dfg","fg","fg");
         sessionManager=new SessionManager(this);
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);

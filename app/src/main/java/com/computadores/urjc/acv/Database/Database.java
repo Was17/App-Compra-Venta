@@ -142,33 +142,34 @@ public class Database extends SQLiteOpenHelper {
 
 
 
-    //ARTICULOS
+    //ARTICULOS   static final String ID_ARTICULOS ="_id";
 
     public long insertArticulo(String name,String email,String password,String foto){
         ContentValues contentValues=new ContentValues();
         contentValues.put(NAME_ARTICULOS,name);
-        contentValues.put(PHOTO,foto);
+        contentValues.put(PHOTO_ARTICULO,foto);
         contentValues.put(PRECIO,email);
-        contentValues.put(PASSWORD,password);
+        contentValues.put(DESCRIPCION,password);
+        contentValues.put(ARTICULO_ID_USER,password);
         return sqLiteDatabase.insert(TABLE_ARTICULOS,null,contentValues);
     }
     public boolean delete(long id){
         return sqLiteDatabase.delete(TABLE_ARTICULOS, ID_ARTICULOS +"="+id,null)>0;
     }
     public Cursor getAllArticulos(){
-        return sqLiteDatabase.query(TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,PASSWORD,PHOTO},null,null,null,null,null);
+        return sqLiteDatabase.query(TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,ARTICULO_ID_USER},null,null,null,null,null);
     }
     public Cursor getChatMessages(String name)throws SQLException{
         Cursor cursor;
 
-        cursor = this.sqLiteDatabase.query(true,TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,PASSWORD,PHOTO}, "(" + NAME_ARTICULOS + " like '%" + name + "%' OR " + NAME_ARTICULOS + " like '%" + "j" + "%')", null, null, null, null,null );
+        cursor = this.sqLiteDatabase.query(true,TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,ARTICULO_ID_USER}, "(" + NAME_ARTICULOS + " like '%" + name + "%' OR " + NAME_ARTICULOS + " like '%" + "j" + "%')", null, null, null, null,null );
         if(cursor!=null){
             cursor.moveToFirst();
         }
         return cursor;}
     public Cursor getArticulo(long rowID)throws SQLException{
 
-        Cursor cursor=sqLiteDatabase.query(true,TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,PASSWORD,PHOTO}, ID_ARTICULOS +"="+rowID,null,null,null,null,null);
+        Cursor cursor=sqLiteDatabase.query(true,TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,ARTICULO_ID_USER}, ID_ARTICULOS +"="+rowID,null,null,null,null,null);
         if(cursor!=null){
             cursor.moveToFirst();
         }
@@ -178,9 +179,10 @@ public class Database extends SQLiteOpenHelper {
     public boolean updateArticulo(long rowId,String name,String email,String password,String foto){
         ContentValues args=new ContentValues();
         args.put(NAME_ARTICULOS,name);
-        args.put(PHOTO,foto);
+        args.put(PHOTO_ARTICULO,foto);
         args.put(PRECIO,email);
-        args.put(PASSWORD,password);
+        args.put(DESCRIPCION,password);
+        args.put(ARTICULO_ID_USER,password);
         return sqLiteDatabase.update(TABLE_ARTICULOS,args, ID_ARTICULOS +"="+rowId,null)>0;
     }
     // closing database

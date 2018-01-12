@@ -1,5 +1,6 @@
 package com.computadores.urjc.acv.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -109,6 +110,7 @@ public class AddArticuloActivity extends AppCompatActivity {
             mSetImage.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 100, bos);
             byte[] img = bos.toByteArray();
             returnIntent.putExtra("image", img);
+            returnIntent.putExtra("photo", mPath);
             // setResult(RESULT_OK);
             setResult(RESULT_OK, returnIntent);
             super.finish();
@@ -199,7 +201,12 @@ public class AddArticuloActivity extends AppCompatActivity {
 
         mPath = savedInstanceState.getString("file_path");
     }
-
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -217,12 +224,13 @@ public class AddArticuloActivity extends AppCompatActivity {
                                 }
                             });
 
-
                     Bitmap bitmap = BitmapFactory.decodeFile(mPath);
+                    mPath=getImageUri(this,bitmap).toString();
                     mSetImage.setImageBitmap(bitmap);
                     break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
+                    mPath=path.toString();
                     mSetImage.setImageURI(path);
                     break;
 

@@ -20,6 +20,8 @@ import android.view.View;
 
 
 import com.computadores.urjc.acv.Class.Articulo;
+import com.computadores.urjc.acv.Database.Database;
+import com.computadores.urjc.acv.Fragments.ArticulosFragment;
 import com.computadores.urjc.acv.Fragments.UserFragment;
 import com.computadores.urjc.acv.Fragments.VentaFragment;
 import com.computadores.urjc.acv.R;
@@ -47,16 +49,20 @@ public class MenuActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         snack();
-        /**TabLayout.Tab tabCall = tabs.getTabAt(1);
-        tabCall.setIcon(R.drawable.home_selector);*/
+        TabLayout.Tab tabCall = tabs.getTabAt(0);
+        tabCall.setIcon(R.drawable.home_selector);
+        TabLayout.Tab tabCall2 = tabs.getTabAt(1);
+        tabCall2.setIcon(R.drawable.interes_selector);
+        TabLayout.Tab tabCall3 = tabs.getTabAt(2);
+        tabCall3.setIcon(R.drawable.venta_selector);
     }
     private  Adapter adapter;
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         adapter = new Adapter(getSupportFragmentManager());
         ventaFragment=new VentaFragment();
-        adapter.addFragment(ventaFragment,"Venta");
-        adapter.addFragment(new UserFragment(),"Usuarios");
+        adapter.addFragment(new ArticulosFragment(),"Compra");
+        adapter.addFragment(new UserFragment(),"Interes");
         adapter.addFragment(new VentaFragment(),"Venta");
         viewPager.setAdapter(adapter);
     }
@@ -69,6 +75,11 @@ public class MenuActivity extends AppCompatActivity {
             Bitmap image = BitmapFactory.decodeByteArray(byteArray, 0,
                     byteArray.length);
             passedItem.setImagen(image);
+            Database database=new Database(getApplication());
+            database.open();
+            database.insertArticulo(passedItem.getNombre(),passedItem.getPrecio(),passedItem.getDescripcion(), String.valueOf(data.getExtras().get("photo")));
+            database.close();
+
             // deal with the item yourself
 
         }
