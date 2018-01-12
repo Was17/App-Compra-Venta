@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaCodec;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -40,6 +41,15 @@ public class LoginActivity extends AppCompatActivity {
 
         session=new SessionManager(context);
 
+        Button button_info=(Button) findViewById(R.id.boton_info);
+        button_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri path= Uri.parse("https://github.com/Was17/App-Compra-Venta");
+                Intent intent=new Intent(Intent.ACTION_VIEW,path);
+                startActivity(intent);
+            }
+        });
         Button button_inciar_sesion=(Button) findViewById(R.id.button_inicio_sesion);
         Button button_registro=(Button) findViewById(R.id.button_registro);
         button_inciar_sesion.setOnClickListener(new View.OnClickListener() {

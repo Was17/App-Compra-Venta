@@ -45,7 +45,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_ARTICULO = "CREATE TABLE "
             + TABLE_ARTICULOS + "(" + ID_ARTICULOS + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME_ARTICULOS
             + " TEXT NOT NULL," + PRECIO + " TEXT NOT NULL," + DESCRIPCION
-            + " TEXT NOT NULL,"+PHOTO_ARTICULO + " TEXT NOT NULL," + ARTICULO_ID_USER
+            + " TEXT NOT NULL,"+PHOTO_ARTICULO + " BOLD NOT NULL," + ARTICULO_ID_USER
             + " TEXT NOT NULL" + ")";
    private static final String CREATE_TABLE_USER = "CREATE TABLE "
             + TABLE_USERS + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + NAME
