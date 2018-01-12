@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaCodec;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 import com.computadores.urjc.acv.Activities.MenuActivity;
 import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Utils.SessionManager;
+
+import java.util.regex.Pattern;
 
 import static java.lang.Thread.sleep;
 
@@ -85,6 +89,11 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(i);
                                         finish();
                                     }
+                                    else{
+                                        Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
+                                        database.close();
+
+                                    }
                                 }catch(Exception e){
 
                                     Toast.makeText(getApplicationContext(),"Usuario o contraseña incorrecta",Toast.LENGTH_LONG).show();
@@ -138,22 +147,43 @@ public class LoginActivity extends AppCompatActivity {
                         // Check if username, password is filled
 
                         if(email.trim().length() <= 0) {
+                            Email.setError("Email sin rellenar");
+                        }else if (!validarEmail(email.trim())){
                             Email.setError("Email no valido");
+
                         }else if (username.trim().length() <= 0){
-                            user_name.setError("Usuario no valido");
+                            user_name.setError("Usuario sin rellenar");
                         }else if (password.trim().length() <= 0){
-                           Password.setError("Contraseña no valida");
+                           Password.setError("Contraseña sin rellenar");
                         }
                         else {
-                            database.open();
-                            database.insertUser(username,email, password, "sdg");
-                            database.close();
-                            session.createLoginSession(username, email);
+                            Cursor cursor;
+                            try{
+                                database.open();
+                                cursor=database.getUserByName(username);
+                                if(username.equals(cursor.getString(1))){
+                                    user_name.setError("El Usuario ya existe");
+                                }
+                                database.close();
+                            }catch(Exception e) {
+                                try{
+                                    cursor=database.getUserByEmail(email);
+                                    if(email.equals(cursor.getString(2))){
+                                       Email.setError("El Email ya existe");
+                                    }
+                                    database.close();
 
-                            // Staring MainActivity
-                            Intent i = new Intent(getApplicationContext(), MenuActivity.class);
-                            startActivity(i);
-                            finish();
+                                }catch(Exception a) {
+                                    database.insertUser(username, email, password, "sdg");
+                                    database.close();
+                                    session.createLoginSession(username, email);
+
+                                    // Staring MainActivity
+                                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }
                         }
                     }
                 });
@@ -161,5 +191,9 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+    private boolean validarEmail(String email) {
+        Pattern pattern= Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 }

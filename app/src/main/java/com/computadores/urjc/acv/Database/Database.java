@@ -104,6 +104,18 @@ public class Database extends SQLiteOpenHelper {
     }
 
         return cursor;}
+    public Cursor getUserByEmail(String email) {
+        Cursor cursor=null;
+        try{
+            cursor = this.sqLiteDatabase.query(true,TABLE_USERS,new String[]{ID,NAME,EMAIL,PASSWORD,PHOTO}, EMAIL+ "=?", new String[] { email }, null, null, null,null );
+            if(cursor!=null){
+                cursor.moveToFirst();
+            }
+        }catch (Exception e){
+
+        }
+
+        return cursor;}
     public Cursor getUser(long rowID)throws SQLException{
 
         Cursor cursor=sqLiteDatabase.query(true,TABLE_USERS,new String[]{ID,NAME,EMAIL,PASSWORD,PHOTO},ID+"="+rowID,null,null,null,null,null);
