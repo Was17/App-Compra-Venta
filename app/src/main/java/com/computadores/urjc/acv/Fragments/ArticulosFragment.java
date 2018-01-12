@@ -66,7 +66,7 @@ public class ArticulosFragment extends Fragment {
         private TextView division;
         private Context context;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.card_user, parent, false));
+            super(inflater.inflate(R.layout.card_articulo, parent, false));
             mCardViewTop=itemView.findViewById(R.id.card_articulo);
             insideLayout = itemView.findViewById(R.id.layout_card_articulo);
             context=itemView.getContext();
