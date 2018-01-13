@@ -37,10 +37,10 @@ import javax.mail.internet.MimeMessage;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ArticulosFragment extends Fragment {
+public class InteresFragment extends Fragment {
 
 
-    public ArticulosFragment() {
+    public InteresFragment() {
         // Required empty public constructor
     }
 
@@ -85,16 +85,25 @@ public class ArticulosFragment extends Fragment {
         ArrayList<Articulo> objetos;
         Database database;
         public ContentAdapter(Context context) {
-            database =new Database(context);
-            database.open();
-            Cursor c= database.getAllArticulos();
-            this.objetos = new ArrayList<Articulo>();
-            while (c.moveToNext()){
-                if(!c.getString(5).equals(new SessionManager(context).getid())){
-                    objetos.add(new Articulo(c.getString(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5)));
+            try {
+
+                database = new Database(context);
+                database.open();
+                Cursor interes = database.getInterestByUser(new SessionManager(context).getid());
+                this.objetos = new ArrayList<Articulo>();
+                while (interes.moveToNext()) {
+                    Cursor c = database.getArticulo(interes.getInt(0));
+                    if (!c.getString(5).equals(new SessionManager(context).getid())) {
+
+
+                        objetos.add(new Articulo(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
+
+                    }
                 }
+                database.close();
+            }catch (Exception e){
+
             }
-            database.close();
         }
 
         @Override
@@ -124,6 +133,7 @@ public class ArticulosFragment extends Fragment {
 
                 }
             });
+
 
             final String mensaje="Esto es una prueba";
 

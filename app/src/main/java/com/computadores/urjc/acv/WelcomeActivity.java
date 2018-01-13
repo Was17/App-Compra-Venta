@@ -38,19 +38,8 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Database database=new Database(getApplicationContext());
         database.open();
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
-        database.insertArticulo("fg","dfg","fg","fg");
+        database.insertUser("was","was121995@gmail.com","was","");
+        database.close();
         sessionManager=new SessionManager(this);
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);

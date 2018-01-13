@@ -1,8 +1,6 @@
 package com.computadores.urjc.acv.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -18,11 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.computadores.urjc.acv.Class.Articulo;
 import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Fragments.ArticulosFragment;
-import com.computadores.urjc.acv.Fragments.UserFragment;
+import com.computadores.urjc.acv.Fragments.InteresFragment;
 import com.computadores.urjc.acv.Fragments.VentaFragment;
 import com.computadores.urjc.acv.R;
 import com.computadores.urjc.acv.Utils.SessionManager;
@@ -62,8 +59,8 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new Adapter(getSupportFragmentManager());
         ventaFragment=new VentaFragment();
         adapter.addFragment(new ArticulosFragment(),"Compra");
-        adapter.addFragment(new UserFragment(),"Interes");
         adapter.addFragment(new VentaFragment(),"Venta");
+        adapter.addFragment(new InteresFragment(),"Interes");
         viewPager.setAdapter(adapter);
     }
     @Override
@@ -71,22 +68,28 @@ public class MenuActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Articulo passedItem = (Articulo) data.getExtras().get("passed_item");
-            byte[] byteArray = data.getByteArrayExtra("image");
-            Bitmap image = BitmapFactory.decodeByteArray(byteArray, 0,
-                    byteArray.length);
-            passedItem.setImagen(image);
+
             Database database=new Database(getApplication());
             database.open();
-            database.insertArticulo(passedItem.getNombre(),passedItem.getPrecio(),passedItem.getDescripcion(), String.valueOf(data.getExtras().get("photo")));
+            database.insertArticulo(passedItem.getNombre(),passedItem.getPrecio(),passedItem.getDescripcion(), String.valueOf(data.getExtras().get("photo")),sessionManager.getid());
             database.close();
-
+            adapter.notifyDataSetChanged();
             // deal with the item yourself
-
+            snackAdd();
         }
     }
     private void snack(){
 
         Snackbar snackbar =Snackbar.make(findViewById(R.id.placeSnackBar),"Bienvenido "+ sessionManager.getUserDetails().get("name"),Snackbar.LENGTH_LONG);
+        View view = snackbar.getView();
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)      view.getLayoutParams();
+        params.gravity = Gravity.FILL_HORIZONTAL | Gravity.BOTTOM;
+        view.setLayoutParams(params);
+
+        snackbar.show();
+    }    private void snackAdd(){
+
+        Snackbar snackbar =Snackbar.make(findViewById(R.id.placeSnackBar),"Ha añadido un nuevo producto "+ sessionManager.getUserDetails().get("name"),Snackbar.LENGTH_LONG);
         View view = snackbar.getView();
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)      view.getLayoutParams();
         params.gravity = Gravity.FILL_HORIZONTAL | Gravity.BOTTOM;
@@ -144,7 +147,7 @@ public class MenuActivity extends AppCompatActivity {
             finish();
         }
         if(id== R.id.add){
-            Intent intent=new Intent(this,AddArticuloActivity.class);
+            Intent intent=new Intent(this, AddArticuloActivity.class);
             startActivityForResult(intent,REQUEST_CODE);
         }
         if( id==R.id.perfil){

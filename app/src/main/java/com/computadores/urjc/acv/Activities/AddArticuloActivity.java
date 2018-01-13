@@ -1,17 +1,7 @@
 package com.computadores.urjc.acv.Activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.computadores.urjc.acv.Class.Articulo;
-import com.computadores.urjc.acv.Class.Mensaje;
-import com.computadores.urjc.acv.Class.User;
-import com.computadores.urjc.acv.R;
-
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,26 +12,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.computadores.urjc.acv.Class.Articulo;
+import com.computadores.urjc.acv.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.ArrayList;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -79,8 +69,7 @@ public class AddArticuloActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mSetImage!=null) {
                     mSetImage.buildDrawingCache();
-                    articulo = new Articulo(nombre.getText().toString(), precio.getText().toString(), descripcion.getText().toString(),
-                            new User(), new ArrayList<User>());
+                    articulo = new Articulo(nombre.getText().toString(), precio.getText().toString(), descripcion.getText().toString());
                     finish();
                 }
             }
@@ -106,10 +95,7 @@ public class AddArticuloActivity extends AppCompatActivity {
         if(articulo!=null){
             returnIntent.putExtra("passed_item", articulo);
             mSetImage.buildDrawingCache();
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            mSetImage.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            byte[] img = bos.toByteArray();
-            returnIntent.putExtra("image", img);
+
             returnIntent.putExtra("photo", mPath);
             // setResult(RESULT_OK);
             setResult(RESULT_OK, returnIntent);
@@ -155,7 +141,7 @@ public class AddArticuloActivity extends AppCompatActivity {
                 if(option[which] == "Tomar foto"){
                     openCamera();
                 }else if(option[which] == "Elegir de galeria"){
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setType("image/*");
                     startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
                 }else {
@@ -226,18 +212,28 @@ public class AddArticuloActivity extends AppCompatActivity {
 
                     Bitmap bitmap = BitmapFactory.decodeFile(mPath);
                     mPath=getImageUri(this,bitmap).toString();
-                    mSetImage.setImageBitmap(bitmap);
+                    mSetImage.setImageURI(getImageUri(this,bitmap));
                     break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
                     mPath=path.toString();
-                    mSetImage.setImageURI(path);
+                    mSetImage.setImageURI(Uri.parse(mPath));
                     break;
 
             }
         }
     }
 
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

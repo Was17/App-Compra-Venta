@@ -1,6 +1,5 @@
 package com.computadores.urjc.acv.Fragments;
 
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import com.computadores.urjc.acv.Class.User;
 import com.computadores.urjc.acv.Database.Database;
@@ -104,10 +102,10 @@ public class UserFragment extends Fragment {
 
 
 
-              final String mensaje="Esto es una prueba";
+            final String mensaje="Esto es una prueba";
 
-              final String correo="CompraVentaURJC@gmail.com";
-              final String contraseña = "compraventaldm18";
+            final String correo="CompraVentaURJC@gmail.com";
+            final String contraseña = "compraventaldm18";
             holder.mCardViewTop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -121,7 +119,7 @@ public class UserFragment extends Fragment {
                     properties.put("mail.smtp.port","465");
 
                     try {
-                    Session   session = Session.getDefaultInstance(properties, new Authenticator() {
+                        Session   session = Session.getDefaultInstance(properties, new Authenticator() {
                             @Override
                             protected PasswordAuthentication getPasswordAuthentication() {
                                 return  new PasswordAuthentication(correo,contraseña);

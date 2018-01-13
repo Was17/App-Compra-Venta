@@ -1,5 +1,4 @@
 package com.computadores.urjc.acv.Utils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +36,8 @@ public class SessionManager {
 
     // Emamaail address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
+    // Emamaail address (make variable public to access from outside)
+    public static final String KEY_ID = "id";
 
     // Constructor
     public SessionManager(Context context){
@@ -48,7 +49,7 @@ public class SessionManager {
     /**
      * Create login session
      * */
-    public void createLoginSession(String name, String email){
+    public void createLoginSession(String name, String email,String id){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -57,6 +58,8 @@ public class SessionManager {
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
+
+        editor.putString(KEY_ID, id);
 
         // commit changes
         editor.commit();
@@ -102,6 +105,9 @@ public class SessionManager {
 
         // return user
         return user;
+    }
+    public String getid(){
+        return pref.getString(KEY_ID, null);
     }
 
     /**

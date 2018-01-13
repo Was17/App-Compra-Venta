@@ -4,18 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.MediaCodec;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.computadores.urjc.acv.Activities.MenuActivity;
@@ -23,8 +18,6 @@ import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
 import java.util.regex.Pattern;
-
-import static java.lang.Thread.sleep;
 
 public class LoginActivity extends AppCompatActivity {
     private  Context context;
@@ -85,14 +78,14 @@ public class LoginActivity extends AppCompatActivity {
                                 Cursor c;
                                 try {
                                     database.open();
-                                     c = database.getUserByName(username);
+                                    c = database.getUserByName(username);
                                     if(username.equals(c.getString(1)) && password.equals(c.getString(3))){
 
                                         // Creating user login session
                                         // For testing i am stroing name, email as follow
                                         // Use user real data
 
-                                        session.createLoginSession(username, c.getString(2));
+                                        session.createLoginSession(username, c.getString(2),c.getString(0));
                                         database.close();
                                         // Staring MainActivity
                                         Intent i = new Intent(getApplicationContext(), MenuActivity.class);
@@ -164,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                         }else if (username.trim().length() <= 0){
                             user_name.setError("Usuario sin rellenar");
                         }else if (password.trim().length() <= 0){
-                           Password.setError("Contraseña sin rellenar");
+                            Password.setError("Contraseña sin rellenar");
                         }
                         else {
                             Cursor cursor;
@@ -179,14 +172,16 @@ public class LoginActivity extends AppCompatActivity {
                                 try{
                                     cursor=database.getUserByEmail(email);
                                     if(email.equals(cursor.getString(2))){
-                                       Email.setError("El Email ya existe");
+                                        Email.setError("El Email ya existe");
                                     }
                                     database.close();
 
                                 }catch(Exception a) {
                                     database.insertUser(username, email, password, "sdg");
+                                    int x=database.getAllUsers().getCount();
                                     database.close();
-                                    session.createLoginSession(username, email);
+
+                                    session.createLoginSession(username, email, String.valueOf(x));
 
                                     // Staring MainActivity
                                     Intent i = new Intent(getApplicationContext(), MenuActivity.class);

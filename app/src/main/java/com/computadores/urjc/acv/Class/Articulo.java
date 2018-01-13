@@ -1,35 +1,59 @@
 package com.computadores.urjc.acv.Class;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by was12 on 14/11/2017.
  */
 
 public class Articulo implements Serializable {
+    private String id;
     private String nombre;
     private String precio;
     private String descripcion;
-    private User vendedor;
-    private ArrayList<User> usuariosInteresados;
-    private Bitmap imagen;
+    private String vendedor;
+    private String imagen;
     public Articulo() {
     }
 
-    public Articulo(String nombre, String precio, String descripcion, User vendedor, ArrayList<User> usuariosInteresados) {
+    public Articulo(String id, String nombre, String precio, String descripcion, String imagen,String vendedor) {
+        this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.vendedor = vendedor;
-        this.usuariosInteresados = usuariosInteresados;
+        this.imagen = imagen;
+    }
+
+    public Articulo(String nombre, String precio, String descripcion, String vendedor ) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.vendedor = vendedor;
+
+    }public Articulo(String nombre, String precio, String descripcion, String imagen,String vendedor) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.vendedor = vendedor;
+        this.imagen=imagen;
+
+    }
+    public Articulo(String nombre, String precio, String descripcion ) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
     }
 
     public Articulo(String hola) {
         this.nombre=hola;
     }
+    public Articulo(String hola,String photo) {
+        this.nombre=hola;
+        this.imagen=photo;
+    }
+
+
 
     public String getNombre() {
         return nombre;
@@ -55,27 +79,23 @@ public class Articulo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public User getVendedor() {
+    public String getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(User vendedor) {
+    public void setVendedor(String vendedor) {
         this.vendedor = vendedor;
     }
 
-    public ArrayList<User> getUsuariosInteresados() {
-        return usuariosInteresados;
-    }
-
-    public void setUsuariosInteresados(ArrayList<User> usuariosInteresados) {
-        this.usuariosInteresados = usuariosInteresados;
-    }
-
-    public Bitmap getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(Bitmap imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getId() {
+        return id;
     }
 }
