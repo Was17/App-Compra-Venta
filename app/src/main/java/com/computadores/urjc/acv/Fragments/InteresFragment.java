@@ -124,57 +124,6 @@ public class InteresFragment extends Fragment {
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
             holder.precio.setText(user.getPrecio());
             final String id=user.getId();
-            holder.interesa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    SessionManager sessionManager = new SessionManager(v.getContext());
-                    Database database=new Database(v.getContext());
-                    database.open();
-                    database.insertInteres(sessionManager.getid(),id);
-                    database.close();
-
-
-                }
-            });
-
-
-            final String mensaje="Esto es una prueba";
-
-            final String correo="CompraVentaURJC@gmail.com";
-            final String contraseña = "compraventaldm18";
-            holder.mCardViewTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                    Properties properties= new Properties();
-                    properties.put("mail.smtp.host","smtp.googlemail.com");
-                    properties.put("mail.smtp.socketFactory.port","465");
-                    properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-                    properties.put("mail.smtp.auth","true");
-                    properties.put("mail.smtp.port","465");
-
-                    try {
-                        Session   session = Session.getDefaultInstance(properties, new Authenticator() {
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return  new PasswordAuthentication(correo,contraseña);
-                            }
-                        });
-                        if(session!=null){
-                            Message message= new MimeMessage(session);
-                            message.setFrom(new InternetAddress(correo));
-                            message.setSubject(("asunto urjc"));
-                            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(""));
-                            message.setContent(mensaje,"text/html; charset=utf-8");
-                            Transport.send(message);
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            });
 
         }
 

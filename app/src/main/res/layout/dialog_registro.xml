@@ -38,8 +38,9 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    >
                     <AutoCompleteTextView
                         android:id="@+id/email_registro"
                         android:layout_width="match_parent"
@@ -53,7 +54,9 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    >
 
                     <EditText
                         android:id="@+id/password_registro"
@@ -71,7 +74,9 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
+                    >
 
                     <EditText
                         android:id="@+id/user_name_registro"
@@ -92,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/button"
                     android:textColor="@color/colorWhite"
                     android:text="@string/button_registro"
                     android:textStyle="bold" />

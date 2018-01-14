@@ -64,8 +64,7 @@ public class UserFragment extends Fragment {
         private Context context;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.card_user, parent, false));
-            mCardViewTop=itemView.findViewById(R.id.card_articulo);
-            insideLayout = itemView.findViewById(R.id.layout_card_articulo);
+            mCardViewTop=itemView.findViewById(R.id.card_user);
             context=itemView.getContext();
             nombre=(TextView) itemView.findViewById(R.id.card_title);
         }
@@ -75,17 +74,12 @@ public class UserFragment extends Fragment {
         ArrayList<User> objetos;
         Database database;
         public ContentAdapter(Context context) {
-            database =new Database(context);
-            database.open();
-            Cursor c= database.getAllUsers();
+
             this.objetos = new ArrayList<User>();
-            while (c.moveToNext()){
-                objetos.add(new User(c.getString(1)));
-            }
+
             objetos.add(new User("jonads"));
             objetos.add(new User("Eustaquio"));
-            database.close();
-        }
+             }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -97,48 +91,6 @@ public class UserFragment extends Fragment {
 
             User user= objetos.get(position);
             holder.nombre.setText(user.getNombre());
-            holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
-
-
-
-
-            final String mensaje="Esto es una prueba";
-
-            final String correo="CompraVentaURJC@gmail.com";
-            final String contraseña = "compraventaldm18";
-            holder.mCardViewTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                    Properties properties= new Properties();
-                    properties.put("mail.smtp.host","smtp.googlemail.com");
-                    properties.put("mail.smtp.socketFactory.port","465");
-                    properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-                    properties.put("mail.smtp.auth","true");
-                    properties.put("mail.smtp.port","465");
-
-                    try {
-                        Session   session = Session.getDefaultInstance(properties, new Authenticator() {
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return  new PasswordAuthentication(correo,contraseña);
-                            }
-                        });
-                        if(session!=null){
-                            Message message= new MimeMessage(session);
-                            message.setFrom(new InternetAddress(correo));
-                            message.setSubject(("asunto urjc"));
-                            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(""));
-                            message.setContent(mensaje,"text/html; charset=utf-8");
-                            Transport.send(message);
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            });
-
         }
 
         @Override

@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.computadores.urjc.acv.Activities.ArticuloActivity;
+import com.computadores.urjc.acv.Activities.ChatActivity;
+import com.computadores.urjc.acv.Activities.MenuActivity;
 import com.computadores.urjc.acv.Activities.ProfileActivity;
 import com.computadores.urjc.acv.Class.Articulo;
 import com.computadores.urjc.acv.Database.Database;
@@ -140,10 +142,19 @@ try {recyclerView.setAdapter(new ContentAdapter(getActivity()));
             holder.interesa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(v.getContext(), ArticuloActivity.class);
+                    Intent intent=new Intent(v.getContext(), ChatActivity.class);
                     intent.putExtra("id",id);
                     v.getContext().startActivity(intent);
 
+
+                }
+            });
+            holder.mCardViewTop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(v.getContext(), ArticuloActivity.class);
+                    intent.putExtra("id",id);
+                    v.getContext().startActivity(intent);
 
                 }
             });
