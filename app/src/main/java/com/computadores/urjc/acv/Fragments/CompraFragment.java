@@ -37,10 +37,10 @@ import javax.mail.internet.MimeMessage;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ArticulosFragment extends Fragment {
+public class CompraFragment extends Fragment {
 
 
-    public ArticulosFragment() {
+    public CompraFragment() {
         // Required empty public constructor
     }
 

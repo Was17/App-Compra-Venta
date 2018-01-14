@@ -18,7 +18,7 @@ import android.view.View;
 
 import com.computadores.urjc.acv.Class.Articulo;
 import com.computadores.urjc.acv.Database.Database;
-import com.computadores.urjc.acv.Fragments.ArticulosFragment;
+import com.computadores.urjc.acv.Fragments.CompraFragment;
 import com.computadores.urjc.acv.Fragments.InteresFragment;
 import com.computadores.urjc.acv.Fragments.VentaFragment;
 import com.computadores.urjc.acv.R;
@@ -58,7 +58,7 @@ public class MenuActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new Adapter(getSupportFragmentManager());
         ventaFragment=new VentaFragment();
-        adapter.addFragment(new ArticulosFragment(),"Compra");
+        adapter.addFragment(new CompraFragment(),"Compra");
         adapter.addFragment(new VentaFragment(),"Venta");
         adapter.addFragment(new InteresFragment(),"Interes");
         viewPager.setAdapter(adapter);

@@ -65,6 +65,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         else{
                             database.updateUser(cursor.getLong(0),cursor.getString(1),cursor.getString(2),newPassword,cursor.getString(4));
                             Toast.makeText(getApplicationContext(),"Se ha actualizado la contraseña correctamente",Toast.LENGTH_LONG).show();
+                            finish();
                         }
                         database.close();
 

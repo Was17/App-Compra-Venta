@@ -27,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView email=(TextView)findViewById(R.id.email_perfil);
         TextView nombre=(TextView)findViewById(R.id.user_name_perfil);
         Button modificar_contraseña=(Button)findViewById(R.id.button_modificar_contraseña);
+        Button modificar_email=(Button)findViewById(R.id.button_modificar_email);
         email.setText(sessionManager.getUserDetails().get("email"));
         nombre.setText(sessionManager.getUserDetails().get("name"));
         modificar_contraseña.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +39,18 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+        modificar_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(getApplicationContext(),ChangeEmailActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
+
+
+
+
+
 }

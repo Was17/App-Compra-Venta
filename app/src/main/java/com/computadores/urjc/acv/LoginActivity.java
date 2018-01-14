@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private boolean validarEmail(String email) {
+    public boolean validarEmail(String email) {
         Pattern pattern= Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
     }

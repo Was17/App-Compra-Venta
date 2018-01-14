@@ -17,4 +17,5 @@
     <string name="add">añadir articulo</string>
     <string name="profile">perfil</string>
     <string name="modificar_contraseña">modificar contraseña</string>
+    <string name="modificar_email">modificar email</string>
 </resources>

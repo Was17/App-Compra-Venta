@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
-            android:layout_height="304dp"
+            android:layout_height="272dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
@@ -106,6 +106,17 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/button"
                     android:text="@string/modificar_contraseña"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_modificar_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button"
+                    android:text="@string/modificar_email"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
 
