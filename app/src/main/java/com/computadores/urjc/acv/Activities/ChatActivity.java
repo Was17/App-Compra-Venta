@@ -38,6 +38,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         sessionManager=new SessionManager(this);
         // Adding Toolbar to Main screen
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        
        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         setupViewPager(viewPager);
         // Set Tabs inside Toolbar

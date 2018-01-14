@@ -114,7 +114,7 @@ public class CompraFragment extends Fragment {
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
-            holder.precio.setText(user.getPrecio());
+            holder.precio.setText(user.getPrecio()+" €");
             final String id=user.getId();
             holder.interesa.setOnClickListener(new View.OnClickListener() {
                 @Override

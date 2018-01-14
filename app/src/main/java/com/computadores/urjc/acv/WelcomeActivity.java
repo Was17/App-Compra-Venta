@@ -58,7 +58,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Database database=new Database(getApplicationContext());
         database.open();
         database.insertUser("was","was121995@gmail.com","was","");
-        database.insertUser("juan","was12199@gmail.com","juan", "");
+        database.insertUser("juan","was12199@yopmail.com","juan", "");
         database.close();
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {

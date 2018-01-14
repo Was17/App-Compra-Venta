@@ -60,13 +60,14 @@ public class UserFragment extends Fragment {
         private TextView nombre;
         private CardView mCardViewTop;
         private View insideLayout;
-        private TextView division;
+        private TextView email;
         private Context context;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.card_user, parent, false));
             mCardViewTop=itemView.findViewById(R.id.card_user);
             context=itemView.getContext();
             nombre=(TextView) itemView.findViewById(R.id.card_title);
+        email=(TextView) itemView.findViewById(R.id.card_text);
         }
     }
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
@@ -77,8 +78,16 @@ public class UserFragment extends Fragment {
 
             this.objetos = new ArrayList<User>();
 
-            objetos.add(new User("jonads"));
-            objetos.add(new User("Eustaquio"));
+            objetos.add(new User("jonads","@gmail.com"));
+            objetos.add(new User("Eustaquio","@gmail.com"));
+            objetos.add(new User("jonads","@gmail.com"));
+            objetos.add(new User("Eustaquio","@gmail.com"));
+            objetos.add(new User("jonads","@gmail.com"));
+            objetos.add(new User("Eustaquio","@gmail.com"));
+            objetos.add(new User("jonads","@gmail.com"));
+            objetos.add(new User("Eustaquio","@gmail.com"));
+            objetos.add(new User("jonads","@gmail.com"));
+            objetos.add(new User("Eustaquio","@gmail.com"));
              }
 
         @Override
@@ -91,6 +100,7 @@ public class UserFragment extends Fragment {
 
             User user= objetos.get(position);
             holder.nombre.setText(user.getNombre());
+            holder.email.setText(user.getEmail());
         }
 
         @Override

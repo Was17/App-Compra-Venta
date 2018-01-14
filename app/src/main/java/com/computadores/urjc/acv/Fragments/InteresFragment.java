@@ -70,7 +70,7 @@ public class InteresFragment extends Fragment {
         private TextView precio;
         private Context context;
         public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.card_articulo, parent, false));
+            super(inflater.inflate(R.layout.card_articulo2, parent, false));
             mCardViewTop=itemView.findViewById(R.id.card_articulo);
             insideLayout = itemView.findViewById(R.id.layout_card_articulo);
             context=itemView.getContext();
@@ -122,7 +122,7 @@ public class InteresFragment extends Fragment {
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
-            holder.precio.setText(user.getPrecio());
+            holder.precio.setText(user.getPrecio()+" €");
             final String id=user.getId();
 
         }
