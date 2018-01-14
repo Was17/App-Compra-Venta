@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.computadores.urjc.acv.Class.Articulo;
 import com.computadores.urjc.acv.Database.Database;
@@ -105,7 +106,7 @@ public class CompraFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            Articulo user= objetos.get(position);
+            final Articulo user= objetos.get(position);
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
@@ -114,24 +115,36 @@ public class CompraFragment extends Fragment {
             holder.interesa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    final String mensaje;
+                    String vendedor=user.getVendedor();
+                    Cursor cursor,cursor1;
+                    final String correo="CompraVentaURJC@gmail.com";
+                    final String contraseña = "compraventaldm18";
 
                     SessionManager sessionManager = new SessionManager(v.getContext());
                     Database database=new Database(v.getContext());
                     database.open();
-                    database.insertInteres(sessionManager.getid(),id);
-                    database.close();
+                    String usuario;
+                    String c;
+
+                        cursor = database.getUserByName(sessionManager.getUserDetails().get("name"));
+                        usuario=cursor.getString(1);
+                        c=cursor.getString(2);
+
+                    String vende;
+
+                        cursor1=database.getUser(Integer.parseInt(vendedor));
+                        vende=cursor1.getString(2);
 
 
-                }
-            });
+                   mensaje="Bienvenido a Compra-Venta URJC "+usuario+".\n"//cursor.getString(1)+". "
+                           +"Estos son los datos del articulo que le interesa:\n"
+                           +"Nombre = "+user.getNombre()+".\n"
+                           +"Precio = "+user.getPrecio()+".\n"
+                           +"Descripcion = "+user.getDescripcion()+".\n"
+                            +"Correo del Vendedor = "+vende+".\n"//cursor1.getString(2)
+                           +"Gracias por confiar en Compra-Venta URJC.";
 
-            final String mensaje="Esto es una prueba";
-
-            final String correo="CompraVentaURJC@gmail.com";
-            final String contraseña = "compraventaldm18";
-            holder.mCardViewTop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
                     StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     Properties properties= new Properties();
@@ -151,16 +164,26 @@ public class CompraFragment extends Fragment {
                         if(session!=null){
                             Message message= new MimeMessage(session);
                             message.setFrom(new InternetAddress(correo));
-                            message.setSubject(("asunto urjc"));
-                            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(""));
+                            message.setSubject(("Me interesa este articulo"));
+                            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(c/*cursor.getString(2)*/));
                             message.setContent(mensaje,"text/html; charset=utf-8");
                             Transport.send(message);
                         }
                     }catch (Exception e){
                         e.printStackTrace();
                     }
+                    database.insertInteres(sessionManager.getid(),id);
+                    database.close();
+
+
                 }
             });
+
+            final String mensaje="Esto es una prueba";
+
+            final String correo="CompraVentaURJC@gmail.com";
+            final String contraseña = "compraventaldm18";
+
 
         }
 
