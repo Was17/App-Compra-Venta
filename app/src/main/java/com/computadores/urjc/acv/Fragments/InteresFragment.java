@@ -2,6 +2,7 @@ package com.computadores.urjc.acv.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -80,7 +81,7 @@ public class InteresFragment extends Fragment {
             interesa=(ImageButton) itemView.findViewById(R.id.share_button);
         }
     }
-    public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
+    public class ContentAdapter extends RecyclerView.Adapter<ViewHolder>{
         // Set numbers of List in RecyclerView.
         ArrayList<Articulo> objetos;
         Database database;
@@ -118,14 +119,43 @@ public class InteresFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            Articulo user= objetos.get(position);
+            final Articulo user= objetos.get(position);
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
             holder.precio.setText(user.getPrecio()+" €");
             final String id=user.getId();
+            holder.interesa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Cursor cursor;
+                    String vendedor=user.getVendedor();
+                    database.open();
+                    cursor=database.getUser(Integer.parseInt(vendedor));
+
+
+                    String[]to={cursor.getString(2)};
+                    sendEmail(to,null,"Compra-Venta URJC","Hola, soy "+cursor.getString(1)+" y estoy interesado en tu articulo");
+
+                }
+            });
+        }
+
+        private void sendEmail(String[]emailAddresses,String[]carbonCopies,String subjet, String message)
+        {
+            Intent emailIntent=new Intent(Intent.ACTION_SEND);
+            emailIntent.setData(Uri.parse("mailto:"));
+            String[]to=emailAddresses;
+            String[] cc=carbonCopies;
+            emailIntent.putExtra(Intent.EXTRA_EMAIL,to);
+            emailIntent.putExtra(Intent.EXTRA_CC,cc);
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT,subjet);
+            emailIntent.putExtra(Intent.EXTRA_TEXT,message);
+            emailIntent.setType("message/rfc822");
+            startActivity(Intent.createChooser(emailIntent,"Email"));
 
         }
+
 
         @Override
         public int getItemCount() {
