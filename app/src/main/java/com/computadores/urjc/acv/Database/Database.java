@@ -168,7 +168,7 @@ public class Database extends SQLiteOpenHelper {
         try {
             cursor = this.sqLiteDatabase.query(true, TABLE_INTERESA, new String[]{ID_INTERESA, INTERESA_USER, INTERESA_ARTICULO}, INTERESA_USER + "=?", new String[]{id}, null, null, null, null);
             if (cursor != null) {
-                cursor.moveToFirst();
+                cursor.moveToPrevious();
             }
         } catch (Exception e) {
 
@@ -211,10 +211,10 @@ public class Database extends SQLiteOpenHelper {
     public Cursor getAllArticulos(){
         return sqLiteDatabase.query(TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,PHOTO_ARTICULO,ARTICULO_ID_USER},null,null,null,null,null);
     }
-    public Cursor getChatMessages(String name)throws SQLException{
+    public Cursor getChatMessages(String id,String id2)throws SQLException{
         Cursor cursor;
 
-        cursor = this.sqLiteDatabase.query(true,TABLE_ARTICULOS,new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,PHOTO_ARTICULO,ARTICULO_ID_USER}, "(" + NAME_ARTICULOS + " like '%" + name + "%' OR " + NAME_ARTICULOS + " like '%" + "j" + "%')", null, null, null, null,null );
+        cursor = this.sqLiteDatabase.query(true,TABLE_INTERESA,new String[]{ID_INTERESA, INTERESA_USER, INTERESA_ARTICULO}, "(" + INTERESA_USER + " like '%" + id + "%' AND " + INTERESA_ARTICULO + " like '%" + id2 + "%')", null, null, null, null,null );
         if(cursor!=null){
             cursor.moveToFirst();
         }
@@ -233,7 +233,7 @@ public class Database extends SQLiteOpenHelper {
         try {
             cursor = this.sqLiteDatabase.query(true, TABLE_ARTICULOS, new String[]{ID_ARTICULOS, NAME_ARTICULOS, PRECIO,DESCRIPCION,PHOTO_ARTICULO,ARTICULO_ID_USER}, ARTICULO_ID_USER + "=?", new String[]{id}, null, null, null, null);
             if (cursor != null) {
-                cursor.moveToFirst();
+                cursor.moveToLast();
             }
         } catch (Exception e) {
 

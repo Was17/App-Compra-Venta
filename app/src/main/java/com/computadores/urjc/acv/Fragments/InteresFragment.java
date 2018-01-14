@@ -91,18 +91,22 @@ public class InteresFragment extends Fragment {
                 database.open();
                 Cursor interes = database.getInterestByUser(new SessionManager(context).getid());
                 this.objetos = new ArrayList<Articulo>();
-                while (interes.moveToNext()) {
-                    Cursor c = database.getArticulo(interes.getInt(0));
-                    if (!c.getString(5).equals(new SessionManager(context).getid())) {
+               do{
+                   try{
+                       Cursor c = database.getArticulo(interes.getInt(2));
+                       if (!c.getString(5).equals(new SessionManager(context).getid())) {
 
 
-                        objetos.add(new Articulo(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
+                           objetos.add(new Articulo(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
 
-                    }
-                }
+                       }
+                   }catch (Exception e){
+
+                   }
+                } while (interes.moveToNext()) ;
                 database.close();
             }catch (Exception e){
-
+                database.close();
             }
         }
 
@@ -118,7 +122,7 @@ public class InteresFragment extends Fragment {
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
-            holder.precio.setText(user.getDescripcion());
+            holder.precio.setText(user.getPrecio());
             final String id=user.getId();
             holder.interesa.setOnClickListener(new View.OnClickListener() {
                 @Override

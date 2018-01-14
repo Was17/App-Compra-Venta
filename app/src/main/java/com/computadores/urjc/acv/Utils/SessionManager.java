@@ -64,7 +64,10 @@ public class SessionManager {
         // commit changes
         editor.commit();
     }
-
+public void email(String email){
+        editor.putString(KEY_EMAIL,email);
+        editor.commit();
+}
     /**
      * Check login method wil check user login status
      * If false it will redirect user to login page

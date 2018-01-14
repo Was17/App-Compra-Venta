@@ -1,8 +1,12 @@
 package com.computadores.urjc.acv;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +25,8 @@ import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.Utils.PrefManager;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
+import java.io.ByteArrayOutputStream;
+
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -32,14 +38,15 @@ public class WelcomeActivity extends AppCompatActivity {
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
     private SessionManager sessionManager;
-
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Database database=new Database(getApplicationContext());
-        database.open();
-        database.insertUser("was","was121995@gmail.com","was","");
-        database.close();
         sessionManager=new SessionManager(this);
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
@@ -48,6 +55,11 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         }
 
+        Database database=new Database(getApplicationContext());
+        database.open();
+        database.insertUser("was","was121995@gmail.com","was","");
+        database.insertUser("juan","was12199@gmail.com","juan", "");
+        database.close();
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);

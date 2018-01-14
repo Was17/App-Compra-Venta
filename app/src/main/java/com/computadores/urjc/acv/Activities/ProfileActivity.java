@@ -8,15 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.computadores.urjc.acv.Class.Articulo;
 import com.computadores.urjc.acv.Database.Database;
 import com.computadores.urjc.acv.R;
 import com.computadores.urjc.acv.Utils.SessionManager;
 
 
 public class ProfileActivity extends AppCompatActivity {
+    private static final int REQUEST = 1;
     private Context context;
     private SessionManager sessionManager;
     Database database;
+    TextView email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
         context = getApplication();
         database =new Database(getApplication());
         sessionManager=new SessionManager(this);
-        TextView email=(TextView)findViewById(R.id.email_perfil);
+         email=(TextView)findViewById(R.id.email_perfil);
         TextView nombre=(TextView)findViewById(R.id.user_name_perfil);
         Button modificar_contraseña=(Button)findViewById(R.id.button_modificar_contraseña);
         Button modificar_email=(Button)findViewById(R.id.button_modificar_email);
@@ -44,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i =new Intent(getApplicationContext(),ChangeEmailActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

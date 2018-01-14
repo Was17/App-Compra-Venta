@@ -7,10 +7,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +114,7 @@ public class CompraFragment extends Fragment {
             holder.nombre.setText(user.getNombre());
             holder.mCardViewTop.setCardBackgroundColor(Color.GRAY);
             holder.foto.setImageURI(Uri.parse(user.getImagen()));
-            holder.precio.setText(user.getDescripcion());
+            holder.precio.setText(user.getPrecio());
             final String id=user.getId();
             holder.interesa.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,60 +124,71 @@ public class CompraFragment extends Fragment {
                     Cursor cursor,cursor1;
                     final String correo="CompraVentaURJC@gmail.com";
                     final String contraseña = "compraventaldm18";
-
                     SessionManager sessionManager = new SessionManager(v.getContext());
                     Database database=new Database(v.getContext());
                     database.open();
-                    String usuario;
-                    String c;
+                    try{
+                        Cursor c=database.getChatMessages(sessionManager.getid(),id);
+                        c.getString(1);
+                        c.getString(2);
+                        database.close();
+
+                    }catch (Exception e){
+                        database.insertInteres(sessionManager.getid(),id);
+
+                        database.close(); database.open();
+                        String usuario;
+                        String c;
 
                         cursor = database.getUserByName(sessionManager.getUserDetails().get("name"));
                         usuario=cursor.getString(1);
                         c=cursor.getString(2);
 
-                    String vende;
+                        String vende;
 
                         cursor1=database.getUser(Integer.parseInt(vendedor));
                         vende=cursor1.getString(2);
 
 
-                   mensaje="Bienvenido a Compra-Venta URJC "+usuario+".\n"//cursor.getString(1)+". "
-                           +"Estos son los datos del articulo que le interesa:\n"
-                           +"Nombre = "+user.getNombre()+".\n"
-                           +"Precio = "+user.getPrecio()+".\n"
-                           +"Descripcion = "+user.getDescripcion()+".\n"
-                            +"Correo del Vendedor = "+vende+".\n"//cursor1.getString(2)
-                           +"Gracias por confiar en Compra-Venta URJC.";
+                        mensaje="Bienvenido a Compra-Venta URJC "+usuario+".\n"//cursor.getString(1)+". "
+                                +"Estos son los datos del articulo que le interesa:\n"
+                                +"Nombre = "+user.getNombre()+".\n"
+                                +"Precio = "+user.getPrecio()+".\n"
+                                +"Descripcion = "+user.getDescripcion()+".\n"
+                                +"Correo del Vendedor = "+vende+".\n"//cursor1.getString(2)
+                                +"Gracias por confiar en Compra-Venta URJC.";
 
-                    StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                    StrictMode.setThreadPolicy(policy);
-                    Properties properties= new Properties();
-                    properties.put("mail.smtp.host","smtp.googlemail.com");
-                    properties.put("mail.smtp.socketFactory.port","465");
-                    properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
-                    properties.put("mail.smtp.auth","true");
-                    properties.put("mail.smtp.port","465");
+                        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                        StrictMode.setThreadPolicy(policy);
+                        Properties properties= new Properties();
+                        properties.put("mail.smtp.host","smtp.googlemail.com");
+                        properties.put("mail.smtp.socketFactory.port","465");
+                        properties.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
+                        properties.put("mail.smtp.auth","true");
+                        properties.put("mail.smtp.port","465");
 
-                    try {
-                        Session   session = Session.getDefaultInstance(properties, new Authenticator() {
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return  new PasswordAuthentication(correo,contraseña);
+                        try {
+                            Session   session = Session.getDefaultInstance(properties, new Authenticator() {
+                                @Override
+                                protected PasswordAuthentication getPasswordAuthentication() {
+                                    return  new PasswordAuthentication(correo,contraseña);
+                                }
+                            });
+                            if(session!=null){
+                                Message message= new MimeMessage(session);
+                                message.setFrom(new InternetAddress(correo));
+                                message.setSubject(("Me interesa este articulo"));
+                                message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(c/*cursor.getString(2)*/));
+                                message.setContent(mensaje,"text/html; charset=utf-8");
+                                Transport.send(message);
                             }
-                        });
-                        if(session!=null){
-                            Message message= new MimeMessage(session);
-                            message.setFrom(new InternetAddress(correo));
-                            message.setSubject(("Me interesa este articulo"));
-                            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(c/*cursor.getString(2)*/));
-                            message.setContent(mensaje,"text/html; charset=utf-8");
-                            Transport.send(message);
+                        }catch (Exception f){
+                            f.printStackTrace();
                         }
-                    }catch (Exception e){
-                        e.printStackTrace();
+                        database.close();
+
+
                     }
-                    database.insertInteres(sessionManager.getid(),id);
-                    database.close();
 
 
                 }
@@ -187,11 +202,14 @@ public class CompraFragment extends Fragment {
 
         }
 
+
+
         @Override
         public int getItemCount() {
             return objetos.size();
         }
     }
+
 
 
 

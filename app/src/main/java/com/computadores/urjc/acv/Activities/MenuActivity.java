@@ -59,7 +59,7 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new Adapter(getSupportFragmentManager());
         ventaFragment=new VentaFragment();
         adapter.addFragment(new CompraFragment(),"Compra");
-        adapter.addFragment(new VentaFragment(),"Venta");
+        adapter.addFragment(ventaFragment,"Venta");
         adapter.addFragment(new InteresFragment(),"Interes");
         viewPager.setAdapter(adapter);
     }
@@ -73,8 +73,8 @@ public class MenuActivity extends AppCompatActivity {
             database.open();
             database.insertArticulo(passedItem.getNombre(),passedItem.getPrecio(),passedItem.getDescripcion(), String.valueOf(data.getExtras().get("photo")),sessionManager.getid());
             database.close();
-            adapter.notifyDataSetChanged();
             // deal with the item yourself
+            ventaFragment.noti();
             snackAdd();
         }
     }
