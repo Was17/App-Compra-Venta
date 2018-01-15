@@ -135,7 +135,7 @@ public class InteresFragment extends Fragment {
 
 
                     String[]to={cursor.getString(2)};
-                    sendEmail(to,null,"Compra-Venta URJC","Hola, soy "+cursor.getString(1)+" y estoy interesado en tu articulo");
+                    sendEmail(to,null,"Compra-Venta URJC","Hola " +cursor.getString(1)+". Estoy interesado en tu articulo.");
 
                 }
             });

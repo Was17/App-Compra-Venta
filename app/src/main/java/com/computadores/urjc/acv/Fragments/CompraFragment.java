@@ -195,10 +195,6 @@ public class CompraFragment extends Fragment {
                 }
             });
 
-            final String mensaje="Esto es una prueba";
-
-            final String correo="CompraVentaURJC@gmail.com";
-            final String contraseña = "compraventaldm18";
 
 
         }
