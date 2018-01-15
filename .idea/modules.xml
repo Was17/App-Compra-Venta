@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/App-Compra-Venta.iml" filepath="$PROJECT_DIR$/App-Compra-Venta.iml" />
-      <module fileurl="file://C:\Users\David Garcia Herrero\AndroidStudioProjects\App-Compra-Venta\.idea\App-Compra-Venta.iml" filepath="C:\Users\David Garcia Herrero\AndroidStudioProjects\App-Compra-Venta\.idea\App-Compra-Venta.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

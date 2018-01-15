@@ -89,9 +89,11 @@ public class CompraFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         ArrayList<Articulo> objetos;
         Database database;
+        Context context;
         public ContentAdapter(Context context) {
             database =new Database(context);
             database.open();
+            this.context=context;
             Cursor c= database.getAllArticulos();
             this.objetos = new ArrayList<Articulo>();
             while (c.moveToNext()){
@@ -186,8 +188,7 @@ public class CompraFragment extends Fragment {
                             f.printStackTrace();
                         }
                         database.close();
-
-
+                        Snackbar.make(v,"Añadido objeto a la lista interes,en su correo tiene la descripcion del articulo",Toast.LENGTH_SHORT).show();
                     }
 
 

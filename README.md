@@ -5,7 +5,6 @@ App para la Asignatura Laboratorio de discpositivos moviles de la URJC
  
  //En edicción
  
- 
 Nuestra aplicacion se basa en una aplicacion de compra y venta sin pago a traves de la app, cuya funcion principal es poner en contacto al comprador y vendedor.
 Consta por tanto de las siguientes funciones:
 
@@ -25,8 +24,18 @@ Esta apliacion usa los siguientes permisos del sistema
 
 ##Pantallas
 ###Activities
-WelcomeActivity
-LoginActivtyMainActivity  
+######MainActivity  
+Splash Screen.
+######WelcomeActivity
+ Actividad que nos presenta la aplicacion. Tiene la funcionalidad de redireccionar a la pagina de loginActivty o MenuActivity, segun si estamos logeados o no.
+
+ ![Vista de las pantallas de informacion](readmeFiles/WelcomeActivity.jpg)
+
+LoginActivty
+Ventana con los dialogos para iniciar la sesion
+ ![Vista de pantalla login](readmeFiles/Screenshot_1516026501.png)
+ 
+
 MenuActivity
 ProfileActivity
 ArticuloActivity

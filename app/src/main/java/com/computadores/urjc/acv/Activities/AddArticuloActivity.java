@@ -67,7 +67,7 @@ public class AddArticuloActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSetImage!=null) {
+                if(mSetImage!=null && nombre.getText().toString().trim().length() > 0 && descripcion.getText().toString().trim().length() > 0 && precio.getText().toString().trim().length() > 0  ) {
                     mSetImage.buildDrawingCache();
                     articulo = new Articulo(nombre.getText().toString(), precio.getText().toString(), descripcion.getText().toString());
                     finish();
@@ -210,9 +210,9 @@ public class AddArticuloActivity extends AppCompatActivity {
                                 }
                             });
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(mPath);
+                    Bitmap bitmap = decodeFileX(mPath);
                     mPath=getImageUri(this,bitmap).toString();
-                    mSetImage.setImageURI(getImageUri(this,bitmap));
+                    mSetImage.setImageBitmap(bitmap);
                     break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
@@ -223,7 +223,31 @@ public class AddArticuloActivity extends AppCompatActivity {
             }
         }
     }
+    // decode image
+    public Bitmap decodeFileX(String filePath) {
+        // Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, o);
+        // The new size we want to scale to
+        final int REQUIRED_SIZE = 1024;
+        // Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp < REQUIRED_SIZE && height_tmp < REQUIRED_SIZE)
+                break;
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
 
+        // Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, o2);
+        return bitmap;
+    }
     public Bitmap StringToBitMap(String encodedString){
         try{
             byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);

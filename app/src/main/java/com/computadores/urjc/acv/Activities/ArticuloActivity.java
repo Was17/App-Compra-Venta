@@ -26,8 +26,10 @@ public class ArticuloActivity extends AppCompatActivity {
         TextView textView=findViewById(R.id.articulo_descripcion);
         TextView nombre=findViewById(R.id.articulo_nombre);
         ImageView imagen=findViewById(R.id.articulo_imagen);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-      Database database=new Database(getApplicationContext());
+
+        Database database=new Database(getApplicationContext());
       database.open();
       try{
           Intent mIntent = getIntent();
@@ -36,6 +38,8 @@ public class ArticuloActivity extends AppCompatActivity {
           c.moveToFirst();
           textView.setText(c.getString(3));
           nombre.setText(c.getString(1));
+          fab.setClickable(false);
+          fab.setVisibility(View.INVISIBLE);
           imagen.setImageURI(Uri.parse(c.getString(4)));
       }catch (Exception e){
 
@@ -44,12 +48,6 @@ public class ArticuloActivity extends AppCompatActivity {
       }
        database.close();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               startActivity(new Intent(ArticuloActivity.this,ChatActivity.class));
-            }
-        });
+
     }
 }
