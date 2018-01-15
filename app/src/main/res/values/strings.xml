@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WaSell</string>
+    <string name="app_name">Compra-Venta URJC</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="button_inicio_sesion">Iniciar Sesion</string>
     <string name="button_registro">Registrarse</string>
