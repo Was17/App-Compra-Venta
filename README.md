@@ -1,9 +1,10 @@
 # App-Compra-Venta
 App para la Asignatura Laboratorio de discpositivos moviles de la URJC
  
- [APK DOWNLOAD(BETA VERSION)](https://drive.google.com/open?id=1VoCwylB85xRevmN5coeOU77_4tMve3rt)
- 
- //En edicción
+ [APK DOWNLOAD](https://drive.google.com/open?id=1VoCwylB85xRevmN5coeOU77_4tMve3rt)
+   
+   [Memoria pdf](https://drive.google.com/open?id=1mrEkZSJ0KdbGfk1xEDv_-G2tEd8tmS9_)
+
  
 Nuestra aplicacion se basa en una aplicacion de compra y venta sin pago a traves de la app, cuya funcion principal es poner en contacto al comprador y vendedor.
 Consta por tanto de las siguientes funciones:
@@ -25,13 +26,15 @@ Esta apliacion usa los siguientes permisos del sistema
 ## Pantallas  
 ### Activities  
 ###### MainActivity  
-Splash Screen.  
+Splash Screen. 
+ Consta de una imagen presentacion de los desadorrallores
 ###### WelcomeActivity  
- Actividad que nos presenta la aplicacion. Tiene la funcionalidad de redireccionar a la pagina de loginActivty o MenuActivity, segun si estamos logeados o no.
+ Actividad que nos presenta la aplicacion.  
+ Tiene la funcionalidad de redireccionar a la pagina de loginActivty o MenuActivity, segun si estamos logeados o no.
 
 
 
-LoginActivty  
+###### LoginActivty  
 Ventana con los dialogos para iniciar la sesion    
 Consta de 2 AlertDialog que aparecen al pulsar los respectivos botones de inicio sesion y registro  
 En el registro de usuario es necesario rellenar los 3 campos (Nombre Usuario, Email y Contraseña) siendo posible posteriormente editar 2 de esos campos(Contraseña y Email)
@@ -50,7 +53,8 @@ con una toolbar con el nombre de la aplicacion, y tres botones:
    
 Esta Actividad nos permitira visitar las tres ventanas, la primera la de compra nos permitira ver los articulos que añadan los demas usuarios, con la posibilidad de mostrar interes a traves del boton habilitado para ello
 Cuando se pulse es boton, se enviara al correo del usuario las especificaciones del anuncio, ademas de añadirse a la lista de articulos con interes
-La segunda ventana se dispondra para 
+La segunda ventana se dispondra para la venta de articulos
+La tercera para los articulos sobre los que se muestra interes
         
 ##### ProfileActivity
 Ventana que nos muestra el perfil del usuario con el que estamos logeados
@@ -74,7 +78,7 @@ RecyclerView  que muestra los articulos en venta del usuarios
 
 InteresFragment  
 RecyclerView  que muestra los articulos en interes del usuarios  
-###Utils
+### Utils
 Database  
 Base de datos SQLite, con tres tablas( Articulos,Usuarios y Articulos de interes)   
 PrefManager    
@@ -94,3 +98,8 @@ User
 ![Vista de pantalla login](readmeFiles/Screenshot_20180115-125708.png)
 ![Vista de pantalla login](readmeFiles/Screenshot_20180115-125800.png)
 ![Vista de pantalla login](readmeFiles/Screenshot_1516026501.png)
+![Vista de pantalla login](readmeFiles/Screenshot_20180115-130611.png)
+![Vista de pantalla login](readmeFiles/Screenshot_20180115-161333.png)
+![Vista de pantalla login](readmeFiles/Screenshot_20180115-130616.png)
+![Vista de pantalla login](readmeFiles/Screenshot_20180115-163447.png)
+![Vista de pantalla login](readmeFiles/Screenshot_1516011148.png)
